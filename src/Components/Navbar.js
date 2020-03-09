@@ -4,7 +4,7 @@ import Logo from "./utils/brighttreelogo.png"
 import { ButtonContainer } from "./utils/button"
 import styled from 'styled-components'
 
-const NavWrapper = styled.div`
+const NavWrapperstyle = styled.div`
 background:var(--lightgrey);
 .nav-link{
     font-family: roboto;
@@ -15,11 +15,10 @@ background:var(--lightgrey);
 `
 
 class NavBar extends React.Component {
-
     render() {
         return (
-            <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5">
-                <Link to="/Home">
+            <NavWrapperstyle className="navbar navbar-expand-sm navbar-dark px-sm-5">
+                <Link to="/">
                     <img src={Logo} alt="store"
                         className="navbar-brand" />
                 </Link>
@@ -49,7 +48,7 @@ class NavBar extends React.Component {
                     </ButtonContainer>
                 </Link>
 
-            </NavWrapper>
+            </NavWrapperstyle>
         )
     }
 }

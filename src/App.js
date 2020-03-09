@@ -3,6 +3,8 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import './App.css';
 import Navbar from "./Components/Navbar";
 import Homepage from "./Components/Homepage"
+import picturedisplay from "./Components/picturedisplay"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 class App extends React.Component {
 
@@ -21,8 +23,8 @@ class App extends React.Component {
       <Navbar/>
       <Switch>
        <Route exact path="/" component={Homepage}/>
-        <Route exact path="/Home" component={Homepage} />
-        <Route path="/Livefeed " component={Homepage}/>
+        <Route exact path="/Home" component={picturedisplay} />
+        <Route path="/Livefeed " component={picturedisplay}/>
       </Switch>
     </React.Fragment>
     </BrowserRouter>

@@ -38,4 +38,5 @@ body{
 .column{display:flex; flex-direction:column;}
 
 .form-inline{
+  display: inline-block
 }
