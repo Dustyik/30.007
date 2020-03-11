@@ -2,26 +2,34 @@ import React, { useState, useEffect } from 'react';
 import ReactMapGl, { Marker, Popup } from "react-map-gl"
 import '../App.css';
 import * as parkdate from "./data/data.json"
-import {plant} from "./plant.svg"
-import firebase from "./firebase/firebase.js"
+import { plant } from "./plant.svg"
+import firebaseclass from "./firebase/firebase.js"
 
 function App() {
   const accesstoken = "pk.eyJ1IjoiZHVzdHlpayIsImEiOiJjazdpcHR2cm4wajlhM2ZwZTc0Y2dvZWZkIn0.NDtL-vByWR8lDk3e2sQMgw"
   const [viewport, setviewport] = useState({
-    latitude: 45.4215,
-    longitude: -75.6972,
+    latitude: 1.3521, // sg centre
+    longitude: 103.8198, //sg centre
     width: "100vw",
     height: "100vh",
-    zoom: 10
+    zoom: 11
   })
 
-  console.log(firebase)
+  const [coordinates, setcoordinates] = useState({
+    data : [[103.96286, 1.34017], [103.86299, 1.36576]]
+
+  })
+
+  const data = firebaseclass.getfirestore();
+  
+  console.log(data)
+
 
   const [selectedpark, useselectedpark] = useState(null);
 
   useEffect(() => {
     const listener = e => {
-      if (e.key === "Escape"){
+      if (e.key === "Escape") {
         useselectedpark(null);
       }
     };
@@ -41,39 +49,39 @@ function App() {
           setviewport(viewport)
         }}>
 
-        {parkdate.features.map((park) =>
-          <Marker key={park.properties.PARK_ID} latitude={park.geometry.coordinates[1]} longitude={park.geometry.coordinates[0]}>
-            
+        {coordinates.data.map((coordinates) =>
+          <Marker key={coordinates[0]} latitude={coordinates[1]} longitude={coordinates[0]}>
+
             <button class="marker-btn" onClick={(e) => {
               e.preventDefault();
-              useselectedpark(park);
+              useselectedpark(coordinates);
               console.log("selected")
             }}>
-              <img src = {plant} alt="Plant Icon"/>
+              <img src={plant} alt="Plant Icon" />
             </button>
 
           </Marker>
 
         )}
 
-        {selectedpark ?   
-        (<Popup 
-        latitude = {selectedpark.geometry.coordinates[1]}
-        longitude = {selectedpark.geometry.coordinates[0]}
-        onClose = {() => {
-          useselectedpark(null);
-        }}
-        >
-          <div>
-            <h4>
-              {selectedpark.properties.NAME}
-            </h4>
-            <p>
-              {selectedpark.properties.DESCRIPTIO}
-            </p>
-          </div>
-        </Popup>)
-        : null}
+        {selectedpark ?
+          (<Popup
+            latitude={selectedpark.geometry.coordinates[1]}
+            longitude={selectedpark.geometry.coordinates[0]}
+            onClose={() => {
+              useselectedpark(null);
+            }}
+          >
+            <div>
+              <h4>
+                {selectedpark.properties.NAME}
+              </h4>
+              <p>
+                {selectedpark.properties.DESCRIPTIO}
+              </p>
+            </div>
+          </Popup>)
+          : null}
 
       </ReactMapGl>
 
