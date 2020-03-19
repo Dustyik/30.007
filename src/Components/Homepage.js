@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactMapGl, { Marker, Popup } from "react-map-gl"
 import '../App.css';
-import * as parkdate from "./data/data.json"
-import { plant } from "./plant.svg"
-import firebaseclass from "./firebase/firebase.js"
+import firebase from "./firebase/firebase.js"
+import "firebase/firestore"
+import icon from "./rsz_icon.png"
+import { useHistory } from "react-router-dom"
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 function App() {
   const accesstoken = "pk.eyJ1IjoiZHVzdHlpayIsImEiOiJjazdpcHR2cm4wajlhM2ZwZTc0Y2dvZWZkIn0.NDtL-vByWR8lDk3e2sQMgw"
-  const [viewport, setviewport] = useState({
+  const [viewport, setviewport] = React.useState({
     latitude: 1.3521, // sg centre
     longitude: 103.8198, //sg centre
     width: "100vw",
@@ -15,19 +18,31 @@ function App() {
     zoom: 11
   })
 
-  const [coordinates, setcoordinates] = useState({
-    data : [[103.96286, 1.34017], [103.86299, 1.36576]]
+  const [details, setdetails] = React.useState([
+  ])
 
-  })
+  const history = useHistory();
 
-  const data = firebaseclass.getfirestore();
-  
-  console.log(data)
+  const callback = React.useCallback(
+    (e) => {
+      console.log("visitgallery")
+      history.push("/gallery")
+    },
+    [],
+  );
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const db = firebase.firestore()
+      const data = await db.collection("data").get()
+      setdetails(data.docs.map(doc => doc.data()))
+    }
+    fetchData();
+  }, [])
 
-  const [selectedpark, useselectedpark] = useState(null);
+  const [selectedpark, useselectedpark] = React.useState(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const listener = e => {
       if (e.key === "Escape") {
         useselectedpark(null);
@@ -40,6 +55,7 @@ function App() {
     }
   }, [])
 
+
   return (
     <div className="App">
       <ReactMapGl {...viewport}
@@ -49,15 +65,14 @@ function App() {
           setviewport(viewport)
         }}>
 
-        {coordinates.data.map((coordinates) =>
-          <Marker key={coordinates[0]} latitude={coordinates[1]} longitude={coordinates[0]}>
+        {details.map((details) =>
+          <Marker key={details.name} latitude={details.lat} longitude={details.long}>
 
             <button class="marker-btn" onClick={(e) => {
               e.preventDefault();
-              useselectedpark(coordinates);
-              console.log("selected")
+              useselectedpark(details);
             }}>
-              <img src={plant} alt="Plant Icon" />
+              <img src={icon} alt="icon" className="navbar-brand" />
             </button>
 
           </Marker>
@@ -66,22 +81,34 @@ function App() {
 
         {selectedpark ?
           (<Popup
-            latitude={selectedpark.geometry.coordinates[1]}
-            longitude={selectedpark.geometry.coordinates[0]}
+            latitude={selectedpark.lat}
+            longitude={selectedpark.long}
+            closeOnClick={false}
             onClose={() => {
               useselectedpark(null);
             }}
           >
             <div>
-              <h4>
-                {selectedpark.properties.NAME}
-              </h4>
-              <p>
-                {selectedpark.properties.DESCRIPTIO}
-              </p>
+
+              <Card style={{ width: '18rem' }}>
+                <Card.Body>
+                  <Card.Title>{selectedpark.name}</Card.Title>
+                  <Card.Text>
+                    {selectedpark.postalcode}
+                  </Card.Text>
+                  <Button  href="#" onClick={(e) => {
+                    callback();
+                  }}>
+                    Visit Gallery
+                  </Button>
+                </Card.Body>
+              </Card>
             </div>
           </Popup>)
           : null}
+        {
+          console.log("in render", details)
+        }
 
       </ReactMapGl>
 

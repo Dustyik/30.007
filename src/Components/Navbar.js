@@ -1,8 +1,9 @@
 import React from 'react';
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import Logo from "./utils/brighttreelogo.png"
 import { ButtonContainer } from "./utils/button"
 import styled from 'styled-components'
+import firebaseclass from "./firebase/firebase.js"
 
 const NavWrapperstyle = styled.div`
 background:var(--lightgrey);
@@ -15,6 +16,10 @@ background:var(--lightgrey);
 `
 
 class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <NavWrapperstyle className="navbar navbar-expand-sm navbar-dark px-sm-5">
@@ -22,14 +27,6 @@ class NavBar extends React.Component {
                     <img src={Logo} alt="store"
                         className="navbar-brand" />
                 </Link>
-
-                <ul className="navbar-nav align-items-center">
-                    <li className="nav-item ml-5">
-                        <Link to="/Home" className="nav-link">
-                            Gallery
-                        </Link>
-                    </li>
-                </ul>
 
                 <ul className="navbar-nav align-items-center">
                     <li className="nav-item ml5">

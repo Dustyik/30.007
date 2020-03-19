@@ -23,7 +23,7 @@ class App extends React.Component {
       <Navbar/>
       <Switch>
        <Route exact path="/" component={Homepage}/>
-        <Route exact path="/Home" component={picturedisplay} />
+        <Route exact path="/gallery" component={picturedisplay} />
         <Route path="/Livefeed " component={picturedisplay}/>
       </Switch>
     </React.Fragment>
