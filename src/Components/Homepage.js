@@ -24,9 +24,11 @@ function App() {
   const history = useHistory();
 
   const callback = React.useCallback(
-    (e) => {
-      console.log("visitgallery")
-      history.push("/gallery")
+    (deets) => {
+        history.push({
+        pathname: "/gallery",
+        state: {id: deets}
+        })
     },
     [],
   );
@@ -97,7 +99,7 @@ function App() {
                     {selectedpark.postalcode}
                   </Card.Text>
                   <Button  href="#" onClick={(e) => {
-                    callback();
+                    callback(selectedpark.location);
                   }}>
                     Visit Gallery
                   </Button>
