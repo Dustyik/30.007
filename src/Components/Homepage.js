@@ -92,7 +92,7 @@ function App() {
           >
             <div>
 
-              <Card style={{ width: '18rem' }}>
+              <Card style={{ width: '15rem' }}>
                 <Card.Body>
                   <Card.Title>{selectedpark.name}</Card.Title>
                   <Card.Text>
