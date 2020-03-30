@@ -96,7 +96,15 @@ function App() {
                 <Card.Body>
                   <Card.Title>{selectedpark.name}</Card.Title>
                   <Card.Text>
-                    {selectedpark.postalcode}
+                    Postal Code: {selectedpark.postalcode}
+                  </Card.Text>
+
+                  <Card.Text>
+                    Power Level: {selectedpark.powerlevel}
+                  </Card.Text>
+
+                  <Card.Text>
+                    Water Level: {selectedpark.waterlevel}
                   </Card.Text>
                   <Button  href="#" onClick={(e) => {
                     callback(selectedpark.location);
