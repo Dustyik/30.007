@@ -17,7 +17,18 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+    console.log("componentdidmount", this.state)
+    this.setState({
+      lat: this.props.location.state.lat,
+      long: this.props.location.state.long,
+      name: this.props.location.state.name,
+      postalcode: this.props.location.state.postalcode,
+      powerlevel: this.props.location.state.powerlevel,
+      waterlevel: this.props.location.state.waterlevel,
+      hasstart: this.props.location.state.hasstart
+    })
     await this.getPics(this.props.location.state.id)
+
   }
 
   async getPics(deets) {
@@ -54,7 +65,6 @@ class App extends React.Component {
         this.setState(this.state)
 
         let emptyobj = {}
-        console.log("checking src", this.state.photosurl[i])
         emptyobj.src = url
         emptyobj.width = 3
         emptyobj.height = 2
@@ -63,7 +73,6 @@ class App extends React.Component {
         this.setState({
           photosobject: obj
         })
-        console.log("createphotosobj", obj)
       }
       ))
     }
@@ -82,6 +91,20 @@ class App extends React.Component {
     console.log(exist, this.state)
     return (
       <div>
+        <h2>
+          {this.state.name} 
+          <h6>
+            Set-up exist at: {this.state.postalcode}
+          </h6>
+        </h2>
+
+        <h5>
+          Current Water level: {this.state.waterlevel}
+        </h5>
+        <h5>
+          Current Power level: {this.state.powerlevel}
+        </h5>
+
         <div>
           {exist ? (
             <Gallery photos={this.state.photosobject} />

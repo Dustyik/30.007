@@ -24,7 +24,7 @@ class App extends React.Component {
       <Switch>
        <Route exact path="/" component={Homepage}/>
         <Route exact path="/gallery" component={picturedisplay} />
-        <Route path="/Livefeed " component={picturedisplay}/>
+        <Route path="/livefeed" component={Homepage}/>
       </Switch>
     </React.Fragment>
     </BrowserRouter>

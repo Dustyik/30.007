@@ -24,10 +24,19 @@ function App() {
   const history = useHistory();
 
   const callback = React.useCallback(
-    (deets) => {
+    (selectedpark) => {
         history.push({
         pathname: "/gallery",
-        state: {id: deets}
+        state: {
+          id: selectedpark.location,
+          lat: selectedpark.lat,
+          long: selectedpark.long,
+          postalcode: selectedpark.postalcode,
+          name: selectedpark.name,
+          powerlevel: selectedpark.powerlevel,
+          waterlevel: selectedpark.waterlevel,
+          hasstart: selectedpark.hasstart
+        }
         })
     },
     [],
@@ -107,7 +116,7 @@ function App() {
                     Water Level: {selectedpark.waterlevel}
                   </Card.Text>
                   <Button  href="#" onClick={(e) => {
-                    callback(selectedpark.location);
+                    callback(selectedpark);
                   }}>
                     Visit Gallery
                   </Button>
