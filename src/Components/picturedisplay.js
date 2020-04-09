@@ -2,6 +2,123 @@ import React from "react";
 import Gallery from "./Gallery"
 import firebase from "./firebase/firebase.js"
 import { CommunicationPresentToAll } from "material-ui/svg-icons";
+import PropTypes from 'prop-types';
+import SwipeableViews from 'react-swipeable-views';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import plant from "./utils/plantwallpaper3.png"
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+const FullWidthTabs = (diffprops) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" color="default">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          //aria-label="full width tabs example"
+          centered
+        >
+          <Tab label="Set-Up Details" {...a11yProps(0)} />
+          <Tab label="Gallery" {...a11yProps(1)} />
+          <Tab label="Livefeed" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+
+          <div class="container">
+            <img src={plant} alt="plant" />
+            <div class="top-left">
+              <h2 class = "text-title2">
+                {diffprops.deets.name}
+                </h2>
+                <h7 class = "text-title2">
+                  The set-up exist at: {diffprops.deets.postalcode}
+                </h7>
+        
+
+              <h5 class = "text-title2">
+                Current Water level: {diffprops.deets.waterlevel} %
+              </h5>
+              <h5 class = "text-title2">
+                Current Power level: {diffprops.deets.powerlevel} %
+              </h5>
+
+            </div>
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <Gallery photos={diffprops.deets.photosobject}>
+
+          </Gallery>
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          Item Three
+        </TabPanel>
+      </SwipeableViews>
+    </div>
+  );
+}
+
+
 
 class App extends React.Component {
 
@@ -77,7 +194,6 @@ class App extends React.Component {
       ))
     }
 
-    // this.createphotosobject();
   }
 
   randint(int) {
@@ -85,33 +201,20 @@ class App extends React.Component {
   }
 
   render() {
-    if(this.state.photosobject.length == this.state.pathurllength && this.state.photosobject.length > 0){
+    if (this.state.photosobject.length == this.state.pathurllength && this.state.photosobject.length > 0) {
       var exist = true
     }
     console.log(exist, this.state)
     return (
       <div>
-        <h2>
-          {this.state.name} 
-          <h6>
-            Set-up exist at: {this.state.postalcode}
-          </h6>
-        </h2>
-
-        <h5>
-          Current Water level: {this.state.waterlevel}
-        </h5>
-        <h5>
-          Current Power level: {this.state.powerlevel}
-        </h5>
-
         <div>
           {exist ? (
-            <Gallery photos={this.state.photosobject} />
+            <FullWidthTabs fluid className="muitab" deets={this.state} />
           ) : (
               <div />
             )}
         </div>
+
       </div>
 
     );

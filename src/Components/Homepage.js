@@ -3,10 +3,10 @@ import ReactMapGl, { Marker, Popup } from "react-map-gl"
 import '../App.css';
 import firebase from "./firebase/firebase.js"
 import "firebase/firestore"
-import icon from "./rsz_icon.png"
+import icon from "./utils/plantlogobgremoved.png"
 import { useHistory } from "react-router-dom"
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+import Cardjs from "./card.js"
+import logo from "./utils/GClogocropped.png"
 
 function App() {
   const accesstoken = "pk.eyJ1IjoiZHVzdHlpayIsImEiOiJjazdpcHR2cm4wajlhM2ZwZTc0Y2dvZWZkIn0.NDtL-vByWR8lDk3e2sQMgw"
@@ -79,7 +79,8 @@ function App() {
         {details.map((details) =>
           <Marker key={details.name} latitude={details.lat} longitude={details.long}>
 
-            <button class="marker-btn" onClick={(e) => {
+            <button class="marker-btn" style={{background: 'rgba(245, 245, 245, 0', elevation: "0", border:"none"}}
+               onClick={(e) => {
               e.preventDefault();
               useselectedpark(details);
             }}>
@@ -100,28 +101,15 @@ function App() {
             }}
           >
             <div>
+              <Cardjs title = {selectedpark.name} 
+              powerlevel = {"Current power level of farm is at " + selectedpark.powerlevel + "%"}
+              waterlevel = {"Current water level of farm is at " + selectedpark.waterlevel + "%"} 
+              deets = {selectedpark}
+              history = {history}
+              >
+              </Cardjs>
 
-              <Card style={{ width: '15rem' }}>
-                <Card.Body>
-                  <Card.Title>{selectedpark.name}</Card.Title>
-                  <Card.Text>
-                    Postal Code: {selectedpark.postalcode}
-                  </Card.Text>
 
-                  <Card.Text>
-                    Power Level: {selectedpark.powerlevel}
-                  </Card.Text>
-
-                  <Card.Text>
-                    Water Level: {selectedpark.waterlevel}
-                  </Card.Text>
-                  <Button  href="#" onClick={(e) => {
-                    callback(selectedpark);
-                  }}>
-                    Visit Gallery
-                  </Button>
-                </Card.Body>
-              </Card>
             </div>
           </Popup>)
           : null}

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from "react-router-dom"
-import Logo from "./utils/brighttreelogo.png"
+import Logo from "./utils/GClogocropped.png"
 import { ButtonContainer } from "./utils/button"
 import styled from 'styled-components'
 import firebaseclass from "./firebase/firebase.js"
 
 const NavWrapperstyle = styled.div`
-background:var(--lightgrey);
+background: rgba(255, 255, 255, 0.3);
 .nav-link{
     font-family: roboto;
     color:var(--mainDark)!important;
@@ -22,19 +22,11 @@ class NavBar extends React.Component {
 
     render() {
         return (
-            <NavWrapperstyle className="navbar navbar-expand-sm navbar-dark px-sm-5">
+            <NavWrapperstyle className="navbar navbar-expand-sm navbar-dark px-sm-5" >
                 <Link to="/">
                     <img src={Logo} alt="store"
                         className="navbar-brand" />
                 </Link>
-
-                <ul className="navbar-nav align-items-center">
-                    <li className="nav-item ml5">
-                        <Link to="/Livefeed" className="nav-link">
-                            Livefeed
-                        </Link>
-                    </li>
-                </ul>
 
                 <Link to="/" className="ml-auto">
                     <ButtonContainer>

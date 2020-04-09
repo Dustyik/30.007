@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar";
 import Homepage from "./Components/Homepage"
 import picturedisplay from "./Components/picturedisplay"
 import "bootstrap/dist/css/bootstrap.min.css"
+import Tab from "./Components/tab.js"
 
 class App extends React.Component {
 
@@ -24,7 +25,6 @@ class App extends React.Component {
       <Switch>
        <Route exact path="/" component={Homepage}/>
         <Route exact path="/gallery" component={picturedisplay} />
-        <Route path="/livefeed" component={Homepage}/>
       </Switch>
     </React.Fragment>
     </BrowserRouter>
