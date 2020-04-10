@@ -10,7 +10,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import plant from "./utils/plantwallpaper3.png"
+import plant from "./utils/plantwallpaper5.jpeg"
+import MUIButton from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -87,34 +89,63 @@ const FullWidthTabs = (diffprops) => {
           <div class="container">
             <img src={plant} alt="plant" />
             <div class="top-left">
-              <h2 class = "text-title2">
+              <h2 class="text-title2">
                 {diffprops.deets.name}
-                </h2>
-                <h7 class = "text-title2">
-                  The set-up exist at: {diffprops.deets.postalcode}
-                </h7>
-        
+              </h2>
+              <h7 class="text-title2">
+                The set-up exist at: {diffprops.deets.postalcode}
+              </h7>
 
-              <h5 class = "text-title2">
+
+              <h5 class="text-title2">
                 Current Water level: {diffprops.deets.waterlevel} %
               </h5>
-              <h5 class = "text-title2">
+              <h5 class="text-title2">
                 Current Power level: {diffprops.deets.powerlevel} %
               </h5>
 
             </div>
           </div>
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <Gallery photos={diffprops.deets.photosobject}>
 
-          </Gallery>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <Gallery photos={diffprops.deets.photosobject} />
         </TabPanel>
+
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          <div style = {{flexDirection :"row"}}>
+
+            <div style={{ flexDirection: "column" }}>
+              <h6 className = "text-title2" style = {{textAlign:"Left"}}>
+                Current Position of Robot
+              </h6>
+
+              <div style={{ flexDirection: "row" }}>
+                <MUIButton variant="outlined" style={{ padding: "50px", margin: "5px" }} />
+                <MUIButton variant="outlined" style={{ padding: "50px", margin: "5px" }} />
+              </div>
+              <div style={{ flexDirection: "row" }}>
+                <MUIButton variant="outlined" style={{ padding: "50px", margin: "5px" }} />
+                <MUIButton variant="outlined" style={{ padding: "50px", margin: "5px" }} />
+              </div>
+              <div style={{ flexDirection: "row" }}>
+                <MUIButton variant="outlined" style={{ padding: "50px", margin: "5px" }} />
+                <MUIButton variant="outlined" style={{ padding: "50px", margin: "5px" }} />
+              </div>
+            </div>
+
+            <Divider orientation="vertical" flexItem />
+
+            <div style={{ flexDirection: "column" }}>
+              <h2 className = "text-title2">
+                Livefeed
+              </h2>
+            </div>
+
+          </div>
         </TabPanel>
       </SwipeableViews>
-    </div>
+    </div >
   );
 }
 

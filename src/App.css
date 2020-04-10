@@ -22,7 +22,7 @@ body{
 
 .text-title2{
   font-family: 'Roboto', sans-serif ;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   color:black;
 }
@@ -59,6 +59,13 @@ body{
   color: white;
 }
 
+.boxbutton{
+  background-color: green;
+  border: 1px;
+  font-size:30px;
+
+}
+
 /* Bottom left text */
 .bottom-left {
   position: absolute;
@@ -71,6 +78,7 @@ body{
   position: absolute;
   top: 8px;
   left: 16px;
+  text-align:left;
 }
 
 /* Top right text */

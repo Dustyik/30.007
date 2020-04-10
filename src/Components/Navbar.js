@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import firebaseclass from "./firebase/firebase.js"
 
 const NavWrapperstyle = styled.div`
-background: rgba(255, 255, 255, 0.3);
+background: rgba(0, 0, 0, 0.01);
 .nav-link{
     font-family: roboto;
     color:var(--mainDark)!important;
@@ -29,8 +29,13 @@ class NavBar extends React.Component {
                 </Link>
 
                 <Link to="/" className="ml-auto">
+                        <span className="text-title2" style = {{fontSize: "12px", paddingRight:"12px"}}>
+                            <i className="iconwithinbutton" />
+                            Sign Up
+                        </span>
+
                     <ButtonContainer>
-                        <span className="mr-2">
+                        <span className="text-title2" style = {{fontSize: "12px"}}>
                             <i className="iconwithinbutton" />
                             Logout
                         </span>

@@ -7,6 +7,10 @@ import icon from "./utils/plantlogobgremoved.png"
 import { useHistory } from "react-router-dom"
 import Cardjs from "./card.js"
 import logo from "./utils/GClogocropped.png"
+import MUIButton from '@material-ui/core/Button';
+
+const descriptionlat = 1.411229;
+const descriptionlong = 103.628490;
 
 function App() {
   const accesstoken = "pk.eyJ1IjoiZHVzdHlpayIsImEiOiJjazdpcHR2cm4wajlhM2ZwZTc0Y2dvZWZkIn0.NDtL-vByWR8lDk3e2sQMgw"
@@ -20,38 +24,20 @@ function App() {
 
   const [details, setdetails] = React.useState([
   ])
+  const [selectedpark, useselectedpark] = React.useState(null);
 
   const history = useHistory();
-
-  const callback = React.useCallback(
-    (selectedpark) => {
-        history.push({
-        pathname: "/gallery",
-        state: {
-          id: selectedpark.location,
-          lat: selectedpark.lat,
-          long: selectedpark.long,
-          postalcode: selectedpark.postalcode,
-          name: selectedpark.name,
-          powerlevel: selectedpark.powerlevel,
-          waterlevel: selectedpark.waterlevel,
-          hasstart: selectedpark.hasstart
-        }
-        })
-    },
-    [],
-  );
 
   React.useEffect(() => {
     const fetchData = async () => {
       const db = firebase.firestore()
       const data = await db.collection("data").get()
-      setdetails(data.docs.map(doc => doc.data()))
+      setdetails(  
+      data.docs.map(doc => doc.data())
+      )
     }
     fetchData();
   }, [])
-
-  const [selectedpark, useselectedpark] = React.useState(null);
 
   React.useEffect(() => {
     const listener = e => {
@@ -79,17 +65,31 @@ function App() {
         {details.map((details) =>
           <Marker key={details.name} latitude={details.lat} longitude={details.long}>
 
-            <button class="marker-btn" style={{background: 'rgba(245, 245, 245, 0', elevation: "0", border:"none"}}
-               onClick={(e) => {
-              e.preventDefault();
-              useselectedpark(details);
-            }}>
+            <button class="marker-btn" style={{ background: 'rgba(245, 245, 245, 0', elevation: "0", border: "none" }}
+              onClick={(e) => {
+                e.preventDefault();
+                useselectedpark(details);
+              }}>
               <img src={icon} alt="icon" className="navbar-brand" />
             </button>
 
           </Marker>
 
         )}
+        <div  style = {{justifyContent: "center", textAlign: "center"}}>
+        <Marker key={"description marker"} latitude={descriptionlat} longitude={descriptionlong}>
+
+            <MUIButton variant="outlined" style={{ background: 'rgba(152, 251, 152, 0.3', border: "none"}}
+            
+            >
+             <h6 class = "text-title2">
+              Currently {details.length} farms in progress
+              </h6>
+            </MUIButton>
+
+          </Marker>
+
+        </div>
 
         {selectedpark ?
           (<Popup
@@ -101,11 +101,12 @@ function App() {
             }}
           >
             <div>
-              <Cardjs title = {selectedpark.name} 
-              powerlevel = {"Current power level of farm is at " + selectedpark.powerlevel + "%"}
-              waterlevel = {"Current water level of farm is at " + selectedpark.waterlevel + "%"} 
-              deets = {selectedpark}
-              history = {history}
+              <Cardjs
+                title={selectedpark.name}
+                powerlevel={"Current power level of farm is at " + selectedpark.powerlevel + "%"}
+                waterlevel={"Current water level of farm is at " + selectedpark.waterlevel + "%"}
+                deets={selectedpark}
+                history={history}
               >
               </Cardjs>
 
@@ -113,9 +114,6 @@ function App() {
             </div>
           </Popup>)
           : null}
-        {
-          console.log("in render", details)
-        }
 
       </ReactMapGl>
 
